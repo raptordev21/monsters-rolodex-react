@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react'
 import './App.css'
 import CardList from './components/card-list/card-list.component'
+import SearchBar from './components/search-box/SearchBar'
 
 function App() {
   const [monsters, setMonsters] = useState([])
@@ -17,11 +18,12 @@ function App() {
   const monstersCopy = monsters
   const searchCopy = search
 
+  const filteredMonsters = monstersCopy.filter(monster => monster.name.toLowerCase().includes(searchCopy.toLowerCase()))
+
   return (
     <div className="App">
-      <input type="search" name="search" onChange={e => setSearch(e.target.value)} placeholder='Search Monsters' />
-      <div>{search}</div>
-      <CardList monsters={monsters} />
+      <SearchBar placeholder='Search Monsters' handleChange={e => setSearch(e.target.value)} />
+      <CardList monsters={filteredMonsters} />
     </div>
   );
 }
